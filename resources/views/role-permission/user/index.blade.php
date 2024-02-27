@@ -58,8 +58,16 @@
                       @endif
                       </td>
                       <td>
+
+                      @can('edit user')
+
                         <a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-success">Edit</a>
+                      @endcan
+
+                      @can('delete user')
+                        
                         <a href="{{ url('users/'.$user->id.'/delete') }}" class="btn btn-danger mx-2">Delete</a>
+                      @endcan
                       </td>
 
                     </tr>

@@ -13,6 +13,16 @@ use DB;
 class RoleController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('permission:view role', ['only'=> ['index']]);
+        $this->middleware('permission:create role', ['only'=> ['create','store','addPermissionToRole','givePermissionToRole']]);
+        $this->middleware('permission:update role', ['only'=> ['update','edit']]);
+        $this->middleware('permission:delete role', ['only'=> ['delete']]);
+
+
+    }
+
     public function index(){
 
         $roles = Role::get();
@@ -68,7 +78,7 @@ class RoleController extends Controller
         return redirect('roles')->with('status', 'Role Updated Successfully');
     }
 
-    public function destroy($roleId){
+    public function delete($roleId){
         $role = Role::find($roleId);
         $role->delete();
 

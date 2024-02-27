@@ -12,6 +12,25 @@
   </head>
   <body>
 
+  <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __("You're logged in!") }}
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+
   @include('role-permission.nav-links')
 
 
@@ -48,10 +67,23 @@
                       <th>{{ $role->id }}</th>
                       <th>{{ $role->name }}</th>
                       <th>
-                      <a href="{{ url('roles/'.$role->id.'/give-permissions') }}" class="btn btn-info">Add / Edit Role</a>
+                      <a href="{{ url('roles/'.$role->id.'/give-permissions') }}" class="btn btn-info">Add / Edit Role Permission</a>
+
+                      {{-- @can('update role') --}}
+
+                      @role('super-admin')
 
                         <a href="{{ url('roles/'.$role->id.'/edit') }}" class="btn btn-success">Edit</a>
-                        <a href="{{ url('roles/'.$role->id.'/delete') }}" class="btn btn-danger mx-2">Delete</a>
+
+                        @endrole
+                      {{-- @endcan --}}
+
+                      @can('delete role')
+
+                        <a href="{{ url('roles/'.$role->id.'/delete-role') }}" class="btn btn-danger mx-2">Delete</a>
+
+                      @endcan
+
                       </th>
 
                     </tr>

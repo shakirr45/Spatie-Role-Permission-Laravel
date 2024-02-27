@@ -47,8 +47,19 @@
                       <th>{{ $permission->id }}</th>
                       <th>{{ $permission->name }}</th>
                       <th>
+
+                      @can('update permission')
+
                         <a href="{{ url('permissions/'.$permission->id.'/edit') }}" class="btn btn-success">Edit</a>
+
+                        @endcan
+
+                      @can('delete permission')
+
                         <a href="{{ url('permissions/'.$permission->id.'/delete') }}" class="btn btn-danger mx-2">Delete</a>
+
+                        @endcan
+
                       </th>
 
                     </tr>
