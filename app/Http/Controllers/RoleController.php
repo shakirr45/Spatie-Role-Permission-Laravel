@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\User;
 
 use DB;
+use Auth;
 
 
 class RoleController extends Controller
@@ -24,6 +26,26 @@ class RoleController extends Controller
     }
 
     public function index(){
+        // =========================  for need ==========??
+        $currentUserId = Auth::user()->id;
+
+        $currentUserRole = auth()->user()->roles->pluck('name')->first();
+
+        $getAdminAndSuperAdmin = User::whereHas('roles', function($q) {
+            $q->where('name', 'super-admin')
+                ->orWhere('name', 'admin');
+        })->pluck('name', 'id')->toArray();
+
+        // $sIAndAsiUsers = User::whereHas('roles', function($q) use ($currentLoginRolePoliceStation) {
+        //     $q->whereJsonContains('police_stations', $currentLoginRolePoliceStation)
+        //       ->where(function ($query) {
+        //           $query->where('name', 'Assistant Sub Inspector (ASI)')
+        //                 ->orWhere('name', 'Sub Inspector (SI)');
+        //       });
+        // })->pluck('name', 'id')->toArray();
+
+        // dd($getAdminAndSuperAdmin);
+        // =========================  for need ==========??
 
         $roles = Role::get();
 
